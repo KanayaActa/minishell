@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 17:26:57 by miwasa           ###   ########.fr       */
+/*   Created: 2024/12/15 17:18:09 by miwasa            #+#    #+#             */
+/*   Updated: 2024/12/15 17:20:26 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include "env.h"
-# include "utils.h"
-# include "libft.h"
+# include <stdlib.h>
+# include <stdio.h>
 
-typedef struct s_minishell
-{
-	char	**envp;
-	int		last_status;
-}	t_minishell;
-
-void	init_shell(t_minishell *shell, char **envp);
-void	clean_env_table(t_minishell *shell);
+void	*xmalloc(size_t size);
+void	*xrealloc(void *ptr, size_t size);
+void	xfree(void *ptr);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif

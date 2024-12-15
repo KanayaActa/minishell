@@ -6,7 +6,7 @@
 #    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/15 00:14:23 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/15 17:30:39 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ RLFLAGS		:= -lreadline
 
 
 SRCS		:= \
-	main.c
+	minishell.c \
+	env.c \
+	utils.c
 
 OBJS		:= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
