@@ -1,0 +1,55 @@
+コンパイル関連
+
+Makefileで-Wall -Wextra -Werrorが使われている
+makeでエラーなくコンパイル可能（コードを確認する限りは問題なさそう）
+再リンクしないこと（make後に再度makeをしても再コンパイルしない）も満たしているように見えます。
+シンプルなコマンド・グローバル変数
+
+絶対パスコマンド/bin/lsなどは実行できるようなexecute_pipelineの実装。
+グローバル変数 g_received_signal が一つ使用されており、シグナル番号の管理のみしている点は要件に合致しています。
+空コマンドやスペースのみのコマンドもparse_lineやlexerレベルで対応しているように見えます(ただし、要実行テスト)。
+動作不具合があればincomplete workフラグですが、コード上は基本機能は実装されていると推察される。
+引数付きコマンド
+
+find_cmd_in_path関数でPATH検索も行われ、引数もc->argvとしてexecveに渡している。
+複数回テストする必要があるが、コード的には対応可能。
+echo
+
+builtin_echoで-nオプションに対応。
+引数なし、あり、-nありなどは実装されている。
+exit
+
+builtin_exitは引数があれば数値変換してexit()を呼ぶ単純な実装。
+numeric argument requiredなどのエラー処理が必要な場合は現状exit(status)で即終了しているため、Bash互換性には課題が残る可能性。
+プロセスの戻り値
+
+echo $?でlast_statusが参照される実装がある。
+/bin/ls filethatdoesntexistなどが127を返している点も記述されている。
+expr $? + $? のような外部コマンドもパイプライン実装で動くはずだが、exprが存在しない環境では要テスト。
+シグナル
+
+signal.cでSIGINT、SIGQUITハンドリングが行われ、SIGINTでg_received_signalを立て、プロンプトを再表示。
+ctrl-DはreadlineがNULLを返すことでexitと同等動作。
+ctrl-\は無視設定になっている。
+catなどブロッキングコマンド中のシグナル挙動は要実行テスト。
+基本的な要件は満たしているように見えるが、動作の細かい差異は残るかもしれない。
+ダブルクォート・シングルクォート
+
+expands.cで簡易的な展開が実装されており、シングルクォート内は展開しない、ダブルクォート内は展開する、という基本方針は一応記述されている。
+$以外やecho '$USER'がそのまま$USERと表示されるかなどはコード上はそのロジックがある。
+テストは必要だが、基本機能は備わっていそう。
+env, export, unset, cd, pwd
+
+builtin_env, builtin_export, builtin_unset, builtin_cd, builtin_pwdが最低限実装あり。
+export/unsetなどは引数チェックやエラー処理の問題点がDocsにも記載がある。
+相対パス, PATH, リダイレクト, パイプ
+
+execute_pipelineでパイプライン対応、open_redirsでリダイレクト対応あり（Heredocは簡易処理）。
+PATHなしの場合はfind_cmd_in_pathでNULLが返り、command not foundとなるはず。
+相対パスもexecve前にそのまま呼べるので対応可能。
+多段パイプや複雑なリダイレクトは可能だが、bash完全互換には至っていない可能性。
+履歴・異常入力
+
+readline, add_historyを使い、履歴機能は対応。
+存在しないコマンドはcommand not foundを表示し終了コード127を返す。
+総合的に、基本的な必須要件は大部分カバーしているように見えますが、bash完全互換やエラーメッセージ細部、Heredocの完全実装、exportの複雑なケース、exitのエラー処理など、仕様を厳密に満たしていない点が残っています。また、fprintfを使用している点については、Docsで「禁止関数fprintfの使用」と書いてあるのに、現在fprintfが多数使用されています。これらは要修正対象です。
