@@ -6,7 +6,7 @@
 #    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/15 18:43:09 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/15 18:45:56 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS		:= \
 	expands.c \
 	parser.c \
 	signal.c \
+	executor.c \
 	builtins.c \
 	builtins/builtin_cd.c \
 	builtins/builtin_echo.c \

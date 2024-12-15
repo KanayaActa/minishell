@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:25:29 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:58:30 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init_shell(&shell, envp);
 	set_signals();
-	// shell_loop(&shell);
+	shell_loop(&shell);
 	clean_env_table(&shell);
 	return (shell.last_status);
 }
@@ -48,20 +48,13 @@ void shell_loop(t_minishell *shell)
 
 	while (1)
 	{
+		set_signals();
 		line = readline("minishell> ");
 		if (!line)
 		{
 			// ctrl-D
 			printf("exit\n");
 			break;
-		}
-
-		if (g_received_signal == SIGINT) {
-			// ここでプロンプト整 形
-			shell->last_status = 130; 
-			g_received_signal = 0;
-			xfree(line);
-			continue ;
 		}
 
 		if (*line)
@@ -95,5 +88,12 @@ void shell_loop(t_minishell *shell)
 			shell->last_status = execute_pipeline(shell, cmd);
 		}
 		free_command_list(cmd);
+		if (g_received_signal == SIGINT) {
+			// ここでプロンプト整 形
+			shell->last_status = 130; 
+			g_received_signal = 0;
+			// xfree(line);
+			continue ;
+		}
 	}
 }

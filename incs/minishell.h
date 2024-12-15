@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:40:10 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:48:16 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ extern volatile sig_atomic_t g_received_signal;
 
 void	init_shell(t_minishell *shell, char **envp);
 void	clean_env_table(t_minishell *shell);
-
+void	shell_loop(t_minishell *shell);
 #endif
