@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int builtin_exit(t_shell *shell, char **argv)
+int builtin_exit(t_minishell *shell, char **argv)
 {
     (void)shell;
     // just exit

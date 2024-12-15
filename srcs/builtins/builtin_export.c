@@ -10,7 +10,7 @@ static int is_valid_key(const char *k)
     return 1;
 }
 
-int builtin_export(t_shell *shell, char **argv)
+int builtin_export(t_minishell *shell, char **argv)
 {
     if(!argv[1])
     {

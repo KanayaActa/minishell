@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int builtin_cd(t_shell *shell, char **argv)
+int builtin_cd(t_minishell *shell, char **argv)
 {
     // no options
     // cd relative or absolute

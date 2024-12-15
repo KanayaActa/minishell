@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   expands.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 16:28:12 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:35:58 by miwasa           ###   ########.fr       */
+/*   Created: 2024/12/15 18:36:17 by miwasa            #+#    #+#             */
+/*   Updated: 2024/12/15 18:37:00 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef EXPANDS_H
+# define EXPANDS_H
 
-# include <stdlib.h>
+# include "minishell.h"
 
-char	**env_copy(char **envp);
-char    *env_get_value(char **envp, const char *key);
-int     env_set_value(char ***envp, const char *key, const char *value);
-void    env_remove_key(char ***envp, const char *key);
-void    env_print(char **envp);
+char    *expand_variables(t_minishell *shell, const char *str);
 
 #endif
