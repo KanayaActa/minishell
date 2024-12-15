@@ -3,6 +3,70 @@
 禁止関数reallocの使用
 禁止関数fprintfの使用->dprintfにすればいい？
 mallocのエラーハンドリングしていない。
+closeがうまくできているかどうか
+forkのはやしかた(fork失敗時の5回くらいforkを試みること)
+関数名の命名
+変数名の命名
+
+やらなくてもよい
+
+- **env 中のshlvlに変化が見られない。次の階層に行くと増やしてください。（unsetできないなどややこしい挙動がたくさん）**
+- 大量のコマンドを受け取ったときクラッシュ
+
+やったほうがいい
+
+- exportをabc 順にソートする（しなくてもいいらしい）→ OK (校舎から治した）
+- export aa+=aaaを実装する。（みるレビュワー多い印象）(しなくてもいいらしい)  → OK (校舎から治した) - やらなくてもいい
+- すでに環境変数が存在し、valueもある場合、export a と入力しても、valueはそのまま残る
+- echo -n -n aaaをじっこうすると aaaと出力してほしい。→ OK (校舎から治した）
+- echo -n-n aaaのときは改行ありで出力する（-n-n aaa と出力）→ OK (校舎から治した）
+- unset PATH後にビルトインの中でenvは動いてはいけない   → OK (校舎から治した）
+- 逆にほかはうごかなければいけない → OK (PWD) (校舎から治した)
+- cat 実行中のctr-C,ctr-\は改行がでないなど、少し挙動が違う
+- 存在しないものをunsetしようとするとセグフォします。起動してすぐunset aaなど
+→ OK (校舎から治した）
+- 今いるディレクトリーの権限を外から消された時に、cd .. で移動できないが本家は移動できる
+- 今いるディレクトリーが消された時にpwdが動きません
+- エラーの数が少ないです
+
+```jsx
+<minishell>
+minishell$ car > outfile < infile | car < infile2 > outfile
+minishell: infile2: No such file or directory
+<bash>
+bash: car > outfile < infile | car < infile2 > outfile
+bash: car: command not found
+bash: infile2: No such file or directory
+```
+
+- exit関係 (1) → Almost OK
+
+```jsx
+[bash]
+(Something wrong version)
+exit aa | exit
+bash: exit: aa: numeric argument required
+geonwkim@c3r5s1:~/minishell2/minishell/bbb$ echo $?
+130
+
+-----------
+(Works????)
+geonwkim@c3r6s5:~/minishell2/minishell$ exit aa | exit
+bash: exit: aa: numeric argument required
+geonwkim@c3r6s5:~/minishell2/minishell$ exit
+exit
+geonwkim@c3r6s5:~/minishell2/minishell$ echo $?
+127
+------------
+
+[minishell]
+(Something wrong version)
+exit aa | exit
+minishell: exit: numeric argument required: Success
+exit
+minishell$ echo $?
+0
+```
 
 
 しなくてもいいんじゃね
@@ -10,4 +74,9 @@ mallocのエラーハンドリングしていない。
 シェル変数
 ""(ダブルクオーテーションをとじていない時の処理)
 
-未実装HereDoc
+
+未実装
+
+HereDoc
+
+
