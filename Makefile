@@ -6,7 +6,7 @@
 #    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/15 17:30:39 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/15 18:27:31 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,19 @@ RLFLAGS		:= -lreadline
 SRCS		:= \
 	minishell.c \
 	env.c \
-	utils.c
+	utils.c \
+	lexer.c \
+	expands.c \
+	parser.c \
+	signal.c \
+	builtins.c \
+	builtins/builtins_cd.c \
+	builtins/builtins_echo.c \
+	builtins/builtins_env.c \
+	builtins/builtins_exit.c \
+	builtins/builtins_export.c \
+	builtins/builtins_pwd.c \
+	builtins/builtins_unset.c \
 
 OBJS		:= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
