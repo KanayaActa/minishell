@@ -6,7 +6,7 @@
 #    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/15 18:39:14 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/15 18:43:09 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(LIBFT):
 	$(MAKE) -C $(FT_DIR)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(RLFLAGS)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
