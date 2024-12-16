@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:50:42 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 04:20:08 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	builtin_exit(t_minishell *shell, char **argv)
 		status = 0; // 引数がなければ0で終了
 	}
 	// 引数が正常に数値なら"exit"を表示する必要があればここで表示
-	fprintf(stdout, "exit\n"); // 必要なら有効にする
+	ft_fprintf(stdout, "exit\n"); // 必要なら有効にする
 	exit(status);
 	return (0); // ここには到達しない
 }

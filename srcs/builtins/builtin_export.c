@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 04:08:23 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 04:08:46 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 04:19:23 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	builtin_export(t_minishell *shell, char **argv)
 	size_t	klen;
 	char	*oldval;
 	char	*newval;
+	int		append;
 
-	int append; // flag for +=
 	if (!argv[1])
 	{
 		// print all env in format declare -x ...
@@ -62,7 +62,7 @@ int	builtin_export(t_minishell *shell, char **argv)
 			if (eq > argv[i] && eq[-1] == '+')
 			{
 				// += case
-				size_t klen = (eq - 1) - argv[i]; // key length until '+'
+				klen = (eq - 1) - argv[i]; // key length until '+'
 				key = ft_substr(argv[i], 0, klen);
 				val = ft_strdup(eq + 1);
 				append = 1;

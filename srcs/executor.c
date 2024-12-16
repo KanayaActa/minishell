@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:42 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:19:44 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 04:42:18 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,8 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 	pid_t		*pids;
 	t_command	*c;
 	int			status;
-	int			flag;
+	int			sigint_flag;
+	int			sigquit_flag;
 	int			i;
 	int			j;
 
@@ -272,7 +273,8 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 	}
 	ignore_signals_for_async(); // 条件分岐で実行
 	// Wait for all children
-	flag = 0;
+	sigint_flag = 0;
+	sigquit_flag = 0;
 	i = 0;
 	while (i < count)
 	{
@@ -281,16 +283,24 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 			shell->last_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
-			if (WTERMSIG(status) == SIGINT && !flag)
+			if (WTERMSIG(status) == SIGINT && !sigint_flag)
 			{
 				// reset_signal_handlers();
 				// ignore_signals_for_async(); // 条件分岐で実行
-				write(STDOUT_FILENO, "\n", 1);
-				flag = 1;
+				write(STDERR_FILENO, "\n", 1);
+				sigint_flag = 1;
+			}
+			if (WTERMSIG(status) == SIGQUIT)
+			{
+				sigquit_flag = 1;
 			}
 			shell->last_status = 128 + WTERMSIG(status);
 		}
 		i++;
+	}
+	if (WTERMSIG(status) == SIGQUIT && sigquit_flag)
+	{
+		ft_fprintf(stderr, "Quit (core dumped)\n");
 	}
 	xfree(pids);
 	return (shell->last_status);
