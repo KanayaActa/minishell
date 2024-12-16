@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:42 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:00:43 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 03:19:44 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ static void	ignore_signals_for_async(void)
 
 int	open_redirs(t_command *c)
 {
-	t_redir	*r;
-	char	template[] = "/tmp/minishell_heredocXXXXXX";
-	char	*delimiter;
-	char	*line;
+	t_redir		*r;
+	char		template[sizeof("/tmp/minishell_heredocXXXXXX")];
+	char		*delimiter;
+	char		*line;
+	int			fd;
 
+	strcpy(template, "/tmp/minishell_heredocXXXXXX");
 	r = c->redir;
-	int fd = -1; // Initialize fd to -1
+	fd = -1; // Initialize fd to -1
 	while (r)
 	{
 		if (r->type == R_INPUT)

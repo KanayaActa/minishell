@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:57 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:00:58 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 03:19:01 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ t_command	*parse_line(t_minishell *shell, const char *line)
 	toks = lexer_tokenize(line);
 	if (!toks)
 		return (NULL);
-	cmds = NULL, cur = NULL;
+	cmds = NULL;
+	cur = NULL;
 	p = toks;
 	while (p)
 	{
@@ -127,7 +128,8 @@ t_command	*parse_line(t_minishell *shell, const char *line)
 			rt = token_to_redir(p->type);
 			p = p->next;
 			if (!p || p->type != T_WORD)
-			{ // syntax error
+			{
+				// syntax error
 				// free and return (free_token_list(toks));
 				free_command_list(cmds);
 				return (NULL);
