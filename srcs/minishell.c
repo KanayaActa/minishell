@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 01:24:41 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 05:55:17 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	shell_loop(t_minishell *shell)
 	{
 		set_signals();
 		line = readline("minishell> ");
+		if (g_received_signal == SIGINT)
+		{
+			shell->last_status = 130;
+			g_received_signal = 0;
+		}
 		if (!line)
 		{
 			printf("exit\n");
@@ -94,11 +99,5 @@ void	shell_loop(t_minishell *shell)
 			shell->last_status = execute_pipeline(shell, cmd);
 		}
 		free_command_list(cmd);
-		if (g_received_signal == SIGINT)
-		{
-			shell->last_status = 130;
-			g_received_signal = 0;
-			continue ;
-		}
 	}
 }

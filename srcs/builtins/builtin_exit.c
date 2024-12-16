@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 04:20:08 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 06:09:22 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	builtin_exit(t_minishell *shell, char **argv)
 	char	*endptr;
 	int		status;
 
-	(void)shell;
 	if (argv[1])
 	{
 		errno = 0;
@@ -37,7 +36,13 @@ int	builtin_exit(t_minishell *shell, char **argv)
 	}
 	else
 	{
-		status = 0; // 引数がなければ0で終了
+		status = shell->last_status; // 引数がなければ0で終了
+	}
+	if (argv[2])
+	{
+		ft_fprintf(stderr, "exit\n");
+		ft_fprintf(stderr, "minishell: exit: too many arguments\n");
+		exit(1);
 	}
 	// 引数が正常に数値なら"exit"を表示する必要があればここで表示
 	ft_fprintf(stdout, "exit\n"); // 必要なら有効にする

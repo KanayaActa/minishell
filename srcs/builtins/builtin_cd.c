@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:21 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:34:23 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 06:14:45 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ int	builtin_cd(t_minishell *shell, char **argv)
 			ft_fprintf(stderr, "minishell: cd: HOME not set\n");
 			return (1);
 		}
+	}
+	else if (argv[2])
+	{
+		ft_fprintf(stderr, "minishell: cd: too many arguments\n");
+		return (1);
 	}
 	else
 		path = argv[1];

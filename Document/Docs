@@ -20,3 +20,12 @@ Document  incs  libft  Makefile  minishell  objs  srcs
 ^\miwasa@c4r1s10:~/Desktop/dev_mini$
 - export +=の対応 [解決]
 - exit のunnumericのエラーハンドリング [解決] 
+
+-未対応の見込み
+shell変数
+$ a=b ./minishell
+$ echo $a
+b
+HereDoc時のctrl + Dの挙動
+""閉じられてないクオート系
+$$ pididの取得

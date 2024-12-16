@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:42 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 04:42:18 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 05:34:55 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ static char	*find_cmd_in_path(t_minishell *shell, char *cmd)
 		return (ft_strdup(cmd));
 	path = env_get_value(shell->envp, "PATH");
 	if (!path)
-		return (NULL);
+	{
+		path = __builtin_alloca(sizeof("./"));
+		strcpy(path, "./");
+	}
 	paths = ft_split(path, ':');
 	if (!paths)
 		return (NULL);
