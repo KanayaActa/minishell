@@ -1,4 +1,3 @@
-// src/executor.c
 #include "minishell.h"
 // static void close_fds(int *fds, int count)
 // {
@@ -28,18 +27,40 @@ int open_redirs(t_command *c)
 			fd = open(r->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if(r->type == R_HEREDOC)
 		{
-			// Implement heredoc (simplified)
 			char template[] = "/tmp/minishell_heredocXXXXXX";
 			fd = mkstemp(template);
 			if(fd < 0)
 				return -1;
-			unlink(template); // Remove the template file
 
-			// Read lines until delimiter is found
-			// This is a simplified version. For full implementation, handle reading input.
-			// You can use a loop with readline here to read user input until the delimiter is reached.
-			// For brevity, we'll skip the actual reading.
+			// ここではまだunlinkしないでおく
+
+			char *delimiter = r->filename;
+			char *line = NULL;
+			while(1) {
+				line = readline("> ");
+				if(!line || ft_strcmp(line, delimiter)==0) {
+					xfree(line);
+					break;
+				}
+				write(fd, line, ft_strlen(line));
+				write(fd, "\n", 1);
+				xfree(line);
+			}
+
+			// 書き込み終了後、一旦クローズ
+			close(fd);
+
+			// ファイルを読み取りモードで再オープンして先頭から読み込めるようにする
+			fd = open(template, O_RDONLY);
+			if (fd < 0) {
+				unlink(template); // 開けなかった場合は削除してエラー
+				return -1;
+			}
+
+			// 再オープン後にファイルをunlinkすることで、ファイルはこのプロセスがクローズするまで残るが名前は消える
+			unlink(template);
 		}
+
 
 		if(fd < 0)
 			return -1;
@@ -112,12 +133,12 @@ static void exec_cmd(t_minishell *shell, t_command *c)
 	char *path = find_cmd_in_path(shell, c->argv[0]);
 	if(!path)
 	{
-		fprintf(stderr, "minishell: %s: command not found\n", c->argv[0]);
+		ft_fprintf(stderr, "minishell: %s: command not found\n", c->argv[0]);
 		exit(127);
 	}
 
 	execve(path, c->argv, shell->envp);
-	fprintf(stderr, "minishell: execve error: %s\n", strerror(errno));
+	ft_fprintf(stderr, "minishell: execve error: %s\n", strerror(errno));
 	exit(126);
 }
 
@@ -189,7 +210,7 @@ int execute_pipeline(t_minishell *shell, t_command *cmd)
 
 			// Handle redirections
 			if(open_redirs(c) < 0){
-				fprintf(stderr, "minishell: redirection error\n");
+				ft_fprintf(stderr, "minishell: redirection error\n");
 				exit(EXIT_FAILURE);
 			}
 

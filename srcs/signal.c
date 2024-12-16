@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:09:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:56:09 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/16 17:15:04 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// signal.c
 #include "minishell.h"
 
 volatile sig_atomic_t g_received_signal = 0;
@@ -20,9 +19,8 @@ static void signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_received_signal = SIGINT;
-		// Ctrl+C時の処理はメインループ側で対応
-		// シグナルハンドラ内では表示まではしない方が安全な場合が多い
-		write(STDOUT_FILENO, "\n", 1);
+		// ysugo以下の行をコメントアウトしてもしなくても挙動が変わらない。理由は不明
+		// write(STDOUT_FILENO, "\n", 1);
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();

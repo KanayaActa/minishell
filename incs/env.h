@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:28:12 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:35:58 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/16 17:32:34 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
-# include <stdlib.h>
+#include "minishell.h"
 
 char	**env_copy(char **envp);
 char    *env_get_value(char **envp, const char *key);

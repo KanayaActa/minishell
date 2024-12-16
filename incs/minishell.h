@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:48:16 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/16 21:05:47 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,17 @@ typedef struct s_minishell
 # define NOERR 0
 # define SYSTEM_ERR 1
 
+# include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include <signal.h>
+# include <stdlib.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+# include <stdio.h>
+# include <unistd.h>
+#include <stdarg.h>
 # include "env.h"
 # include "utils.h"
 # include "signals.h"
@@ -39,4 +48,5 @@ extern volatile sig_atomic_t g_received_signal;
 void	init_shell(t_minishell *shell, char **envp);
 void	clean_env_table(t_minishell *shell);
 void	shell_loop(t_minishell *shell);
+
 #endif

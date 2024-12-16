@@ -3,10 +3,6 @@
 
 #include "minishell.h"
 
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
 // The executor runs the pipeline of t_command
 // Use pipes, fork, execve.
 // handle builtins and redirections.
