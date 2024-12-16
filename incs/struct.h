@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 18:07:07 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 02:56:20 by miwasa           ###   ########.fr       */
+/*   Created: 2024/12/17 02:54:34 by miwasa            #+#    #+#             */
+/*   Updated: 2024/12/17 02:55:06 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#ifndef STRUCT_H
+# define STRUCT_H
 
-int	set_signals(void);
+typedef struct s_minishell
+{
+	char						**envp;
+	int							last_status;
+}								t_minishell;
 
 #endif
