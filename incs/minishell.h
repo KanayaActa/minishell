@@ -6,14 +6,12 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 02:55:20 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 02:57:42 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-
 
 # define NOERR 0
 # define SYSTEM_ERR 1
