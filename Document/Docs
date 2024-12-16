@@ -12,9 +12,11 @@
 - exitの引数が数値以外の場合のエラー処理(bash準拠のエラーコードに合わせる)。
 - ダブルクォート、シングルクォート内での展開ロジックの強化、bash同等へ近づける。
 - parserやlexerやexecutorで正しくない構文が来た時の対処
-- echo -nnnn の対応
+- echo -nnnn の対応 [解決]
 - miwasa@c4r1s10:~/Desktop/dev_mini$ cat | cat
 ^\Quit (core dumped)
 miwasa@c4r1s10:~/Desktop/dev_mini$ cat | cat | ls
 Document  incs  libft  Makefile  minishell  objs  srcs
 ^\miwasa@c4r1s10:~/Desktop/dev_mini$
+- export +=の対応 [解決]
+- exit のunnumericのエラーハンドリング [解決] 
