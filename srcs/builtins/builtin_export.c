@@ -2,13 +2,17 @@
 
 static int	is_valid_key(const char *k)
 {
+	int	i;
+
 	// must not start with digit and only alnum and _
 	if (!ft_isalpha(k[0]) && k[0] != '_')
 		return (0);
-	for (int i = 1; k[i] && k[i] != '='; i++)
+	i = 1;
+	while (k[i] && k[i] != '=')
 	{
 		if (!ft_isalnum(k[i]) && k[i] != '_')
 			return (0);
+		i++;
 	}
 	return (1);
 }
@@ -19,17 +23,21 @@ int	builtin_export(t_minishell *shell, char **argv)
 	size_t	klen;
 	char	*key;
 	char	*val;
+	int		i;
 
 	if (!argv[1])
 	{
 		// print env in format declare -x ...
-		for (int i = 0; shell->envp[i]; i++)
+		i = 0;
+		while (shell->envp[i])
 		{
 			printf("declare -x %s\n", shell->envp[i]);
+			i++;
 		}
 		return (0);
 	}
-	for (int i = 1; argv[i]; i++)
+	i = 1;
+	while (argv[i])
 	{
 		eq = ft_strchr(argv[i], '=');
 		if (eq)
@@ -60,6 +68,7 @@ int	builtin_export(t_minishell *shell, char **argv)
 					"minishell: export: `%s': not a valid identifier\n",
 					argv[i]);
 		}
+		i++;
 	}
 	return (0);
 }

@@ -16,7 +16,7 @@ static void	ignore_signals_for_async(void)
 int	open_redirs(t_command *c)
 {
 	t_redir	*r;
-			char template[] = "/tmp/minishell_heredocXXXXXX";
+	char	template[] = "/tmp/minishell_heredocXXXXXX";
 	char	*delimiter;
 	char	*line;
 
@@ -87,6 +87,8 @@ static char	*find_cmd_in_path(t_minishell *shell, char *cmd)
 	char	**paths;
 	char	*f;
 	char	*fp;
+	int		i;
+	int		j;
 
 	if (ft_strchr(cmd, '/') != NULL)
 		return (ft_strdup(cmd));
@@ -96,23 +98,32 @@ static char	*find_cmd_in_path(t_minishell *shell, char *cmd)
 	paths = ft_split(path, ':');
 	if (!paths)
 		return (NULL);
-	for (int i = 0; paths[i]; i++)
+	i = 0;
+	while (paths[i])
 	{
 		f = ft_strjoin(paths[i], "/");
 		fp = ft_strjoin_free(f, ft_strdup(cmd));
 		if (access(fp, X_OK) == 0)
 		{
-			// Free paths
-			for (int j = 0; paths[j]; j++)
+			j = 0;
+			while (paths[j])
+			{
 				xfree(paths[j]);
+				j++;
+			}
 			xfree(paths);
 			return (fp);
 		}
 		xfree(fp);
+		i++;
 	}
 	// Free paths
-	for (int j = 0; paths[j]; j++)
+	j = 0;
+	while (paths[j])
+	{
 		xfree(paths[j]);
+		j++;
+	}
 	xfree(paths);
 	return (NULL);
 }
@@ -147,16 +158,23 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 	t_command	*c;
 	int			status;
 	int			flag;
+	int			i;
+	int			j;
 
 	// Count commands
 	count = 0;
-	for (t_command *c = cmd; c; c = c->next)
+	c = cmd;
+	while (c)
+	{
+		c = c->next;
 		count++;
+	}
 	pipes = NULL;
 	if (count > 1)
 	{
 		pipes = xmalloc(sizeof(int *) * (count - 1));
-		for (int i = 0; i < count - 1; i++)
+		i = 0;
+		while (i < count - 1)
 		{
 			pipes[i] = xmalloc(sizeof(int) * 2);
 			if (pipe(pipes[i]) < 0)
@@ -164,11 +182,13 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 				perror("pipe");
 				exit(EXIT_FAILURE);
 			}
+			i++;
 		}
 	}
 	pids = xmalloc(sizeof(pid_t) * count);
 	c = cmd;
-	for (int i = 0; i < count; i++)
+	i = 0;
+	while (i < count)
 	{
 		pids[i] = fork();
 		if (pids[i] < 0)
@@ -203,10 +223,12 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 			// Close all pipe fds in child
 			if (pipes)
 			{
-				for (int j = 0; j < count - 1; j++)
+				j = 0;
+				while (j < count - 1)
 				{
 					close(pipes[j][0]);
 					close(pipes[j][1]);
+					j++;
 				}
 			}
 			// Handle redirections
@@ -219,22 +241,26 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 			exec_cmd(shell, c);
 		}
 		c = c->next;
+		i++;
 	}
 	// Parent process closes all pipe fds
 	if (pipes)
 	{
-		for (int i = 0; i < count - 1; i++)
+		i = 0;
+		while (i < count - 1)
 		{
 			close(pipes[i][0]);
 			close(pipes[i][1]);
 			xfree(pipes[i]);
+			i++;
 		}
 		xfree(pipes);
 	}
 	ignore_signals_for_async(); // 条件分岐で実行
 	// Wait for all children
 	flag = 0;
-	for (int i = 0; i < count; i++)
+	i = 0;
+	while (i < count)
 	{
 		waitpid(pids[i], &status, 0);
 		if (WIFEXITED(status))
@@ -250,6 +276,7 @@ int	execute_pipeline(t_minishell *shell, t_command *cmd)
 			}
 			shell->last_status = 128 + WTERMSIG(status);
 		}
+		i++;
 	}
 	xfree(pids);
 	return (shell->last_status);

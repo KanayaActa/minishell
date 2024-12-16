@@ -12,11 +12,12 @@ int	builtin_echo(char **argv)
 		n_flag = 1;
 		i++;
 	}
-	for (; argv[i]; i++)
+	while (argv[i])
 	{
 		printf("%s", argv[i]);
 		if (argv[i + 1])
 			printf(" ");
+		i++;
 	}
 	if (!n_flag)
 		printf("\n");

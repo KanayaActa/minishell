@@ -148,14 +148,19 @@ void	free_command_list(t_command *cmd)
 	t_command	*n;
 	t_redir		*r;
 	t_redir		*rn;
+	int			i;
 
 	while (cmd)
 	{
 		n = cmd->next;
 		if (cmd->argv)
 		{
-			for (int i = 0; cmd->argv[i]; i++)
+			i = 0;
+			while (cmd->argv[i])
+			{
 				xfree(cmd->argv[i]);
+				i++;
+			}
 			xfree(cmd->argv);
 		}
 		r = cmd->redir;

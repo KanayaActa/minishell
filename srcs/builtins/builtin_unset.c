@@ -2,9 +2,13 @@
 
 int	builtin_unset(t_minishell *shell, char **argv)
 {
-	for (int i = 1; argv[i]; i++)
+	int	i;
+
+	i = 1;
+	while (argv[i])
 	{
 		env_remove_key(&shell->envp, argv[i]);
+		i++;
 	}
 	return (0);
 }
