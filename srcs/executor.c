@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:42 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 05:34:55 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 07:34:29 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	open_redirs(t_command *c)
 			fd = open(r->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if (r->type == R_HEREDOC)
 		{
+			signal(SIGQUIT, SIG_IGN);
 			fd = mkstemp(template);
 			if (fd < 0)
 				return (-1);

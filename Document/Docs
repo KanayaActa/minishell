@@ -29,3 +29,8 @@ b
 HereDoc時のctrl + Dの挙動
 ""閉じられてないクオート系
 $$ pididの取得
+SHLVLの対応
+export aa
+などの対応
+bashの場合、変数のみの場合、exportには表示しますが、envには表示しません
+ただし、空文字の場合はenvにもexportにも表示します
