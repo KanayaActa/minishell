@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/15 18:58:30 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/16 20:56:04 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern volatile sig_atomic_t g_received_signal;
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -69,7 +68,7 @@ void shell_loop(t_minishell *shell)
 			int old_stdin = dup(0);
 			int old_stdout = dup(1);
 			if (open_redirs(cmd) < 0) {
-				fprintf(stderr, "redirection error\n");
+				ft_fprintf(stderr, "redirection error\n");
 				dup2(old_stdin, 0);
 				dup2(old_stdout, 1);
 				close(old_stdin);
