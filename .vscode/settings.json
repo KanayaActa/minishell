@@ -1,7 +1,11 @@
 {
-    "files.associations": {
-        "minishell.h": "c",
-        "fcntl.h": "c",
-        "stdlib.h": "c"
-    }
+	"files.associations": {
+		"minishell.h": "c",
+		"fcntl.h": "c",
+		"stdlib.h": "c"
+	},
+	"[c]": {
+		"editor.defaultFormatter": "keyhr.42-c-format"
+	},
+	"editor.formatOnSave": true
 }

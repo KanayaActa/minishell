@@ -13,3 +13,8 @@
 - ダブルクォート、シングルクォート内での展開ロジックの強化、bash同等へ近づける。
 - parserやlexerやexecutorで正しくない構文が来た時の対処
 - echo -nnnn の対応
+- miwasa@c4r1s10:~/Desktop/dev_mini$ cat | cat
+^\Quit (core dumped)
+miwasa@c4r1s10:~/Desktop/dev_mini$ cat | cat | ls
+Document  incs  libft  Makefile  minishell  objs  srcs
+^\miwasa@c4r1s10:~/Desktop/dev_mini$
