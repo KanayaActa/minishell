@@ -6,7 +6,7 @@
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:55:40 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 20:34:43 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 22:05:15 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,10 @@ int		run_builtin(t_minishell *shell, char **argv);
 int		handle_eq_case(t_minishell *shell, char *arg, char *eq);
 int		is_valid_key(const char *k);
 void	export_key_error(char *arg);
+int		handle_no_eq_case(t_minishell *shell, char *arg);
+void	print_export_env_sorted(t_minishell *shell);
+int		get_key_length(const char *s);
+void	free_env_copy(char **env_copy);
+void	print_line(const char *entry);
 
 #endif

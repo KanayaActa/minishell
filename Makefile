@@ -6,7 +6,7 @@
 #    By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/17 20:31:35 by ysugo            ###   ########.fr        #
+#    Updated: 2024/12/17 22:08:06 by ysugo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,9 @@ SRCS		:= \
 	builtins/builtin_exit.c \
 	builtins/builtin_export.c \
 	builtins/builtin_export_utils.c \
+	builtins/builtin_export_mainutils.c \
+	builtins/builtin_export_sort.c \
+	builtins/builtin_export_sort_utils.c \
 	builtins/builtin_pwd.c \
 	builtins/builtin_unset.c \
 

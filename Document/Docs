@@ -27,6 +27,7 @@ USER a
 miwasa@c4r1s10:~/Desktop/dev_mini$ ./minishell 
 minishell> echo $"USER a"
 $USER a
+→この件はzshも対応しておらず、POSIX標準でない為不要[ysugo]
 exportの引数なしをソートする
 - heredoc: 変数展開されていない
 miwasa@c4r1s10:~/Desktop/dev_mini$ cat << EOS

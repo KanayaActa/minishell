@@ -6,7 +6,7 @@
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 04:08:23 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 20:23:41 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 21:42:04 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,10 @@ int	is_valid_key(const char *k)
 	return (1);
 }
 
-static void	print_export_env(t_minishell *shell)
-{
-	int	i;
-
-	i = 0;
-	while (shell->envp[i])
-	{
-		printf("declare -x %s\n", shell->envp[i]);
-		i++;
-	}
-}
-
 void	export_key_error(char *arg)
 {
 	ft_fprintf(stderr,
 		"minishell: export: `%s': not a valid identifier\n", arg);
-}
-
-static int	handle_no_eq_case(t_minishell *shell, char *arg)
-{
-	char	*key;
-
-	key = ft_strdup(arg);
-	if (!is_valid_key(key))
-	{
-		export_key_error(arg);
-		xfree(key);
-		return (1);
-	}
-	env_set_value(&shell->envp, key, "");
-	xfree(key);
-	return (0);
 }
 
 int	builtin_export(t_minishell *shell, char **argv)
@@ -70,7 +42,7 @@ int	builtin_export(t_minishell *shell, char **argv)
 
 	if (!argv[1])
 	{
-		print_export_env(shell);
+		print_export_env_sorted(shell);
 		return (0);
 	}
 	i = 1;
