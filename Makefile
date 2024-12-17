@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
+#    By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/15 18:45:56 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/17 19:20:57 by ysugo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,26 @@ RLFLAGS		:= -lreadline
 SRCS		:= \
 	minishell.c \
 	env.c \
+	env_utils.c \
 	utils.c \
+	ft_fprintf.c \
+	ft_fprintf_utils.c \
 	lexer.c \
+	lexer_utils.c \
 	expands.c \
+	expands_utils.c \
 	parser.c \
+	parser_free.c \
+	parser_line.c \
+	parser_processtoken.c \
 	signal.c \
 	executor.c \
+	executor_childsetup.c \
+	executor_heredoc.c \
+	executor_mainutils.c \
+	executor_path.c \
+	executor_redir.c \
+	executor_utils.c \
 	builtins.c \
 	builtins/builtin_cd.c \
 	builtins/builtin_echo.c \

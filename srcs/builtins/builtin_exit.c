@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 06:09:22 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 12:51:54 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,18 @@ int	builtin_exit(t_minishell *shell, char **argv)
 	{
 		errno = 0;
 		val = ft_strtol(argv[1], &endptr, 10);
-		// strtolの結果がエラーか、あるいはendptrが'\0'でなければ数値以外の文字が残っている
 		if (errno != 0 || *endptr != '\0')
 		{
-			// bashと同様のエラーメッセージを出力
-			// minishell: exit: a: numeric argument required
 			ft_fprintf(stderr, "exit\n");
 			ft_fprintf(stderr, "minishell: exit:\
 				%s: numeric argument required\n", argv[1]);
 			exit(2);
 		}
-		status = (int)val; // longをintにキャスト（範囲外の場合は動作未定義ですがここは簡易実装）
+		status = (int)val;
 	}
 	else
 	{
-		status = shell->last_status; // 引数がなければ0で終了
+		status = shell->last_status;
 	}
 	if (argv[2])
 	{
@@ -44,8 +41,7 @@ int	builtin_exit(t_minishell *shell, char **argv)
 		ft_fprintf(stderr, "minishell: exit: too many arguments\n");
 		exit(1);
 	}
-	// 引数が正常に数値なら"exit"を表示する必要があればここで表示
-	ft_fprintf(stdout, "exit\n"); // 必要なら有効にする
+	ft_fprintf(stdout, "exit\n");
 	exit(status);
-	return (0); // ここには到達しない
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:52:59 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 02:53:01 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 19:37:58 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
-// parser.c
 t_command				*parse_line(t_minishell *shell, const char *line);
 void					free_command_list(t_command *cmd);
 
-// helper
 t_redir					*redir_new(t_redir_type type, char *file);
 void					redir_add_back(t_redir **lst, t_redir *new);
 
-// parse tokens from lexer
-// The parser will create a linked list of commands separated by '|'
+int	process_token(t_minishell *shell, t_token **p, t_command **cmds, t_command **cur);
+
 #endif

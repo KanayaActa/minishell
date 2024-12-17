@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:51 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:00:52 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:14:32 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	is_metachar(int c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '\0');
-}
 
 static t_token	*token_new(t_token_type type, char *val)
 {
@@ -41,36 +36,6 @@ static void	token_add_back(t_token **lst, t_token *new)
 	while (p->next)
 		p = p->next;
 	p->next = new;
-}
-
-static t_token_type	detect_type(const char *line, size_t *i)
-{
-	if (line[*i] == '|')
-	{
-		(*i)++;
-		return (T_PIPE);
-	}
-	else if (line[*i] == '<')
-	{
-		(*i)++;
-		if (line[*i] == '<')
-		{
-			(*i)++;
-			return (T_HEREDOC);
-		}
-		return (T_REDIR_IN);
-	}
-	else if (line[*i] == '>')
-	{
-		(*i)++;
-		if (line[*i] == '>')
-		{
-			(*i)++;
-			return (T_APPEND);
-		}
-		return (T_REDIR_OUT);
-	}
-	return (T_END); // should not happen
 }
 
 static char	*read_word(const char *line, size_t *i)

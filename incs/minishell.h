@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 02:57:42 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:37:39 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "libft.h"
 # include "signals.h"
 # include "utils.h"
+# include "ft_fprintf.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
