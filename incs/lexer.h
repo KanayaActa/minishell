@@ -6,14 +6,14 @@
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:55:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 19:36:51 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 20:37:59 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 typedef enum e_token_type
 {
@@ -34,8 +34,8 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
-int	is_metachar(int c);
-t_token_type	detect_type(const char *line, size_t *i);
+int					is_metachar(int c);
+t_token_type		detect_type(const char *line, size_t *i);
 t_token				*lexer_tokenize(const char *line);
 void				free_token_list(t_token *tokens);
 

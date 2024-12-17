@@ -6,7 +6,7 @@
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:52:59 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 19:37:58 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 20:39:36 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ void					free_command_list(t_command *cmd);
 t_redir					*redir_new(t_redir_type type, char *file);
 void					redir_add_back(t_redir **lst, t_redir *new);
 
-int	process_token(t_minishell *shell, t_token **p, t_command **cmds, t_command **cur);
+int						process_token(t_minishell *shell,
+							t_token **p, t_command **cmds, t_command **cur);
+
+t_command				*cmd_new(void);
+void					add_arg(t_command *cmd, char *arg);
+t_redir_type			token_to_redir(t_token_type t);
 
 #endif

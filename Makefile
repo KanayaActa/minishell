@@ -6,7 +6,7 @@
 #    By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/17 19:20:57 by ysugo            ###   ########.fr        #
+#    Updated: 2024/12/17 20:31:35 by ysugo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ RLFLAGS		:= -lreadline
 
 SRCS		:= \
 	minishell.c \
+	minishell_utils.c \
 	env.c \
 	env_utils.c \
 	utils.c \
@@ -52,6 +53,7 @@ SRCS		:= \
 	builtins/builtin_env.c \
 	builtins/builtin_exit.c \
 	builtins/builtin_export.c \
+	builtins/builtin_export_utils.c \
 	builtins/builtin_pwd.c \
 	builtins/builtin_unset.c \
 

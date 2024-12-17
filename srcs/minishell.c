@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 05:55:17 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/17 20:30:39 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,12 @@ void	shell_loop(t_minishell *shell)
 {
 	char		*line;
 	t_command	*cmd;
-	int			old_stdin;
-	int			old_stdout;
 
 	while (1)
 	{
-		set_signals();
-		line = readline("minishell> ");
-		if (g_received_signal == SIGINT)
-		{
-			shell->last_status = 130;
-			g_received_signal = 0;
-		}
+		line = read_input_line(shell);
 		if (!line)
-		{
-			printf("exit\n");
 			break ;
-		}
-		if (*line)
-			add_history(line);
 		cmd = parse_line(shell, line);
 		xfree(line);
 		if (!cmd)
@@ -76,28 +63,14 @@ void	shell_loop(t_minishell *shell)
 		if (cmd->next == NULL && cmd->argv && cmd->argv[0]
 			&& is_builtin(cmd->argv[0]))
 		{
-			old_stdin = dup(0);
-			old_stdout = dup(1);
-			if (open_redirs(cmd) < 0)
+			if (execute_single_builtin(shell, cmd) < 0)
 			{
-				ft_fprintf(stderr, "redirection error\n");
-				dup2(old_stdin, 0);
-				dup2(old_stdout, 1);
-				close(old_stdin);
-				close(old_stdout);
 				free_command_list(cmd);
 				continue ;
 			}
-			shell->last_status = run_builtin(shell, cmd->argv);
-			dup2(old_stdin, 0);
-			dup2(old_stdout, 1);
-			close(old_stdin);
-			close(old_stdout);
 		}
 		else
-		{
 			shell->last_status = execute_pipeline(shell, cmd);
-		}
 		free_command_list(cmd);
 	}
 }

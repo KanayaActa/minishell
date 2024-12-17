@@ -6,13 +6,13 @@
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 04:08:23 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 12:52:27 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 20:23:41 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_valid_key(const char *k)
+int	is_valid_key(const char *k)
 {
 	int	i;
 
@@ -28,93 +28,59 @@ static int	is_valid_key(const char *k)
 	return (1);
 }
 
+static void	print_export_env(t_minishell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->envp[i])
+	{
+		printf("declare -x %s\n", shell->envp[i]);
+		i++;
+	}
+}
+
+void	export_key_error(char *arg)
+{
+	ft_fprintf(stderr,
+		"minishell: export: `%s': not a valid identifier\n", arg);
+}
+
+static int	handle_no_eq_case(t_minishell *shell, char *arg)
+{
+	char	*key;
+
+	key = ft_strdup(arg);
+	if (!is_valid_key(key))
+	{
+		export_key_error(arg);
+		xfree(key);
+		return (1);
+	}
+	env_set_value(&shell->envp, key, "");
+	xfree(key);
+	return (0);
+}
+
 int	builtin_export(t_minishell *shell, char **argv)
 {
-	char	*eq;
-	char	*key;
-	char	*val;
 	int		i;
-	size_t	klen;
-	char	*oldval;
-	char	*newval;
-	int		append;
+	char	*eq;
+	int		ret;
 
 	if (!argv[1])
 	{
-		i = 0;
-		while (shell->envp[i])
-		{
-			printf("declare -x %s\n", shell->envp[i]);
-			i++;
-		}
+		print_export_env(shell);
 		return (0);
 	}
 	i = 1;
 	while (argv[i])
 	{
 		eq = ft_strchr(argv[i], '=');
-		append = 0;
 		if (eq)
-		{
-			if (eq > argv[i] && eq[-1] == '+')
-			{
-				klen = (eq - 1) - argv[i];
-				key = ft_substr(argv[i], 0, klen);
-				val = ft_strdup(eq + 1);
-				append = 1;
-			}
-			else
-			{
-				klen = eq - argv[i];
-				key = ft_substr(argv[i], 0, klen);
-				val = ft_strdup(eq + 1);
-			}
-			if (!is_valid_key(key))
-			{
-				ft_fprintf(stderr,
-					"minishell: export: `%s': not a valid identifier\n",
-					argv[i]);
-				xfree(key);
-				xfree(val);
-				i++;
-				continue ;
-			}
-			if (append)
-			{
-				oldval = env_get_value(shell->envp, key);
-				if (oldval)
-				{
-					newval = ft_strjoin(oldval, val);
-					env_set_value(&shell->envp, key, newval);
-					xfree(newval);
-				}
-				else
-				{
-					env_set_value(&shell->envp, key, val);
-				}
-			}
-			else
-			{
-				env_set_value(&shell->envp, key, val);
-			}
-			xfree(key);
-			xfree(val);
-		}
+			ret = handle_eq_case(shell, argv[i], eq);
 		else
-		{
-			key = ft_strdup(argv[i]);
-			if (!is_valid_key(key))
-			{
-				ft_fprintf(stderr,
-					"minishell: export: `%s': not a valid identifier\n",
-					argv[i]);
-				xfree(key);
-				i++;
-				continue ;
-			}
-			env_set_value(&shell->envp, key, "");
-			xfree(key);
-		}
+			ret = handle_no_eq_case(shell, argv[i]);
 		i++;
 	}
 	return (0);

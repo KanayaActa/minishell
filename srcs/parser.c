@@ -6,7 +6,7 @@
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:07:45 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 19:14:41 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 19:54:59 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	redir_add_back(t_redir **lst, t_redir *new)
 	p->next = new;
 }
 
-static t_command	*cmd_new(void)
+t_command	*cmd_new(void)
 {
 	t_command	*c;
 
@@ -49,7 +49,7 @@ static t_command	*cmd_new(void)
 	return (c);
 }
 
-static void	add_arg(t_command *cmd, char *arg)
+void	add_arg(t_command *cmd, char *arg)
 {
 	int	count;
 
@@ -62,7 +62,7 @@ static void	add_arg(t_command *cmd, char *arg)
 	cmd->argv[count + 1] = NULL;
 }
 
-static t_redir_type	token_to_redir(t_token_type t)
+t_redir_type	token_to_redir(t_token_type t)
 {
 	if (t == T_REDIR_IN)
 		return (R_INPUT);
