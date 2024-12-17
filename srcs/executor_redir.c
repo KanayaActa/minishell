@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:20:45 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 16:45:20 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 04:45:53 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ static int	redirect_fd(int oldfd, int newfd)
 static int	do_redir(t_redir *r)
 {
 	int		fd;
-	char	template[sizeof("/tmp/minishell_heredocXXXXXX")];
 
-	strcpy(template, "/tmp/minishell_heredocXXXXXX");
 	fd = -1;
 	if (r->type == R_INPUT)
 		fd = open(r->filename, O_RDONLY);
@@ -33,8 +31,6 @@ static int	do_redir(t_redir *r)
 		fd = open(r->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (r->type == R_APPEND)
 		fd = open(r->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (r->type == R_HEREDOC)
-		fd = handle_heredoc(template, r);
 	return (fd);
 }
 

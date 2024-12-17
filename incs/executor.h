@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:55:46 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 20:37:02 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 05:04:41 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 # include  <sys/types.h>
 
 void	ignore_signals_for_async(void);
-int		handle_heredoc(char *template, t_redir *r);
+// int		handle_heredoc(char *template, t_redir *r);
+// int		read_heredoc_lines(int fd, char *delimiter, t_minishell *shell);
+int		prepare_heredocs(t_minishell *shell, t_command *cmds);
+void	set_heredoc_signals(void);
 int		open_redirs(t_command *c);
 char	*find_cmd_in_path(t_minishell *shell, char *cmd);
 void	exec_cmd(t_minishell *shell, t_command *c);
@@ -27,8 +30,7 @@ void	close_all_pipes(int count, int **pipes);
 void	child_process_setup(t_command *c, int i, int count, int **pipes);
 pid_t	*fork_processes(t_minishell *shell,
 			t_command *cmd, int count, int **pipes);
-int		handle_signals_in_status(int status,
-			int *sigint_flag, int *sigquit_flag);
+int		handle_signals_in_status(int status, int *sigint_flag);
 void	handle_single_child(t_minishell *shell,
 			pid_t pid, int *sigint_flag, int *sigquit_flag);
 void	print_sigquit_if_needed(int sigquit_flag);

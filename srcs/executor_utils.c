@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:24 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 16:46:49 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 04:45:32 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ void	exec_cmd(t_minishell *shell, t_command *c)
 	exit(126);
 }
 
-int	handle_signals_in_status(int status, int *sigint_flag, int *sigquit_flag)
+int	handle_signals_in_status(int status, int *sigint_flag)
 {
 	if (WTERMSIG(status) == SIGINT && !(*sigint_flag))
 	{
 		write(STDERR_FILENO, "\n", 1);
 		*sigint_flag = 1;
 	}
-	if (WTERMSIG(status) == SIGQUIT)
-		*sigquit_flag = 1;
 	return (128 + WTERMSIG(status));
 }
 
@@ -59,11 +57,12 @@ void	handle_single_child(t_minishell *shell, pid_t pid,
 		shell->last_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		shell->last_status = handle_signals_in_status(status,
-				sigint_flag, sigquit_flag);
+				sigint_flag);
+	*sigquit_flag = WTERMSIG(status);
 }
 
 void	print_sigquit_if_needed(int sigquit_flag)
 {
-	if (sigquit_flag)
+	if (sigquit_flag == SIGQUIT)
 		ft_fprintf(stderr, "Quit (core dumped)\n");
 }

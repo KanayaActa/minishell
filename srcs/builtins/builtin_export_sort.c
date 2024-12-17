@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_sort.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:56:32 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 22:05:00 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 01:12:17 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ void	print_export_env_sorted(t_minishell *shell)
 	while (shell->envp[count])
 		count++;
 	env_copy = copy_envp_for_sort(shell->envp, count);
-	qsort(env_copy, count, sizeof(char *), compare_env_keys);
+	ft_qsort(env_copy, count, sizeof(char *), compare_env_keys);
 	print_and_free_env_copy(env_copy);
 }

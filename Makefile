@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+         #
+#    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/17 22:08:06 by ysugo            ###   ########.fr        #
+#    Updated: 2024/12/18 05:26:21 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,11 @@ SRCS		:= \
 	parser_free.c \
 	parser_line.c \
 	parser_processtoken.c \
+	heredoc.c \
+	heredoc_utils.c \
 	signal.c \
 	executor.c \
 	executor_childsetup.c \
-	executor_heredoc.c \
 	executor_mainutils.c \
 	executor_path.c \
 	executor_redir.c \

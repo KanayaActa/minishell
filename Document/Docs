@@ -55,6 +55,10 @@ exit
 miwasa@c4r1s10:~/Desktop/dev_mini$ /bin/
 bash: /bin/: Is a director
 
+heredocのadd histroy
+heredocの変数展開
+
+
 -未対応の見込み
 一時exportするだけで良さそう
 shell変数

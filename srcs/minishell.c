@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 20:30:39 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 07:14:39 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,16 @@ void	clean_env_table(t_minishell *shell)
 
 void	shell_loop(t_minishell *shell)
 {
-	char		*line;
 	t_command	*cmd;
 
 	while (1)
 	{
-		line = read_input_line(shell);
-		if (!line)
-			break ;
-		cmd = parse_line(shell, line);
-		xfree(line);
+		cmd = get_parsed_command(shell);
 		if (!cmd)
+			break ;
+		if (handle_heredocs(shell, cmd) < 0)
 			continue ;
-		if (cmd->next == NULL && cmd->argv && cmd->argv[0]
-			&& is_builtin(cmd->argv[0]))
-		{
-			if (execute_single_builtin(shell, cmd) < 0)
-			{
-				free_command_list(cmd);
-				continue ;
-			}
-		}
-		else
-			shell->last_status = execute_pipeline(shell, cmd);
-		free_command_list(cmd);
+		if (execute_command_list(shell, cmd) < 0)
+			continue ;
 	}
 }
