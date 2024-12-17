@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:07:07 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/16 18:24:09 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/17 02:56:20 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
 int	set_signals(void);
 

@@ -12,4 +12,62 @@
 - exitの引数が数値以外の場合のエラー処理(bash準拠のエラーコードに合わせる)。
 - ダブルクォート、シングルクォート内での展開ロジックの強化、bash同等へ近づける。
 - parserやlexerやexecutorで正しくない構文が来た時の対処
-- echo -nnnn の対応
+- echo -nnnn の対応 [解決]
+- miwasa@c4r1s10:~/Desktop/dev_mini$ cat | cat
+^\Quit (core dumped)
+miwasa@c4r1s10:~/Desktop/dev_mini$ cat | cat | ls
+Document  incs  libft  Makefile  minishell  objs  srcs
+^\miwasa@c4r1s10:~/Desktop/dev_mini$
+- export +=の対応 [解決]
+- exit のunnumericのエラーハンドリング [解決]
+- miwasa@c4r1s10:~/Desktop/dev_mini$ echo $"USER"
+USER
+miwasa@c4r1s10:~/Desktop/dev_mini$ echo $"USER a"
+USER a
+miwasa@c4r1s10:~/Desktop/dev_mini$ ./minishell 
+minishell> echo $"USER a"
+$USER a
+exportの引数なしをソートする
+- heredoc: 変数展開されていない
+miwasa@c4r1s10:~/Desktop/dev_mini$ cat << EOS
+> $HOME
+> EOS
+/home/miwasa
+miwasa@c4r1s10:~/Desktop/dev_mini$ ./minishell 
+minishell> cat << EOS
+> $HOME
+> EOS
+$HOME
+-miwasa@c4r1s10:~/Desktop/dev_mini$ ./minishell 
+minishell> cat <<  EOF << EOF2 << EOF3 
+> nowre
+> EOF
+minishell: redirection error
+minishell> cat infile | cat ||| cat > outfile
+cat: infile: No such file or directory
+miwasa@c4r1s10:~/Desktop/dev_mini$ cat infile | cat ||| cat > outfile
+bash: syntax error near unexpected token `|'
+minishell> /bin/
+minishell: execve error: Permission denied
+minishell> 
+exit
+miwasa@c4r1s10:~/Desktop/dev_mini$ /bin/
+bash: /bin/: Is a director
+
+-未対応の見込み
+一時exportするだけで良さそう
+shell変数
+$ a=b ./minishell
+$ echo $a
+b
+HereDoc時のctrl + Dの挙動
+""閉じられてないクオート系
+$$ pididの取得
+SHLVLの対応
+export aa
+などの対応
+bashの場合、変数のみの場合、exportには表示しますが、envには表示しません
+ただし、空文字の場合はenvにもexportにも表示します
+~の解釈$HOMEとおなじでよいのか？
+export 引数なしaa="aaa"と出力されるべきか
+heredoc中にctrl + D <- warningなので問題はなさそう(今のままで問題なさそう)

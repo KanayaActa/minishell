@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 02:58:32 by miwasa            #+#    #+#             */
+/*   Updated: 2024/12/17 02:58:33 by miwasa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int builtin_env(t_minishell *shell)
+int	builtin_env(t_minishell *shell)
 {
 	env_print(shell->envp);
-	return 0;
+	return (0);
 }
