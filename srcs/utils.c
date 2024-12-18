@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:44:39 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 17:38:06 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 10:18:55 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*xrealloc(void *ptr, size_t size)
 		copy_count = old_count + 1;
 	else
 		copy_count = new_count;
-	memcpy(newp, old, copy_count * sizeof(char *));
+	ft_memcpy(newp, old, copy_count * sizeof(char *));
 	xfree(old);
 	return (newp);
 }

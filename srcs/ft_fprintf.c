@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 17:33:21 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 17:34:07 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 09:40:52 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	ft_fileno(FILE *stream)
+{
+	return (stream->_fileno);
+}
 
 static int	ffprintf_redirect_stdout(FILE *stream)
 {
 	int	fd;
 	int	saved_stdout;
 
-	fd = fileno(stream);
+	fd = ft_fileno(stream);
 	saved_stdout = -1;
 	if (fd != STDOUT_FILENO)
 	{

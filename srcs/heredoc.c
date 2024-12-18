@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 05:06:02 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 07:39:14 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:17:12 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	create_heredoc_tempfile(char *template)
 {
 	int	fd;
 
-	fd = mkstemp(template);
+	fd = ft_mkstemp(template);
 	if (fd < 0)
 	{
 		ft_fprintf(stderr, "minishell: heredoc: mkstemp error\n");
@@ -83,7 +83,7 @@ static int	handle_heredoc(t_minishell *shell, t_redir *r)
 	char	template[sizeof("/tmp/minishell_heredocXXXXXX")];
 	int		fd;
 
-	strcpy(template, "/tmp/minishell_heredocXXXXXX");
+	ft_strcpy(template, "/tmp/minishell_heredocXXXXXX");
 	fd = create_heredoc_tempfile(template);
 	if (fd < 0)
 		return (-1);

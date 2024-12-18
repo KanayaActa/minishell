@@ -1,6 +1,7 @@
 リファクタリング予定・TODOリスト
 
 - fprintf使用禁止→dprintfやwriteベースに切り替えること。
+- fprintfはlibftに組み込む。va_argとかがあるから
 - realloc使用禁止→reallocを用いないメモリアロケーション戦略を検討する。xrealloc削除。
 - mallocエラーハンドリング→xmalloc, xreallocでexit対応済み。今後はエラー発生時のメッセージ整備。
 - close漏れチェック：パイプ、リダイレクト時のfdを漏れなくcloseすることを確認。
@@ -47,7 +48,7 @@ minishell: redirection error
 minishell> cat infile | cat ||| cat > outfile
 cat: infile: No such file or directory
 miwasa@c4r1s10:~/Desktop/dev_mini$ cat infile | cat ||| cat > outfile
-bash: syntax error near unexpected token `|'
+bash: syntax error near unexpected token `|
 minishell> /bin/
 minishell: execve error: Permission denied
 minishell> 

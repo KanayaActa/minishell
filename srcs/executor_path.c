@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:18:04 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 16:45:15 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 09:44:40 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*find_cmd_in_path(t_minishell *shell, char *cmd)
 	path = env_get_value(shell->envp, "PATH");
 	if (!path)
 	{
-		strcpy(buf, "./");
+		ft_strcpy(buf, "./");
 		path = buf;
 	}
 	paths = ft_split(path, ':');

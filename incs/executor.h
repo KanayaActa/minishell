@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:55:46 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 05:04:41 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:22:52 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 # include "minishell.h"
 # include  <sys/types.h>
 
+# define MAX_TRIES 100
+# define MAX_NUM 999999
+# define PAD_WIDTH 6
+
 void	ignore_signals_for_async(void);
-// int		handle_heredoc(char *template, t_redir *r);
-// int		read_heredoc_lines(int fd, char *delimiter, t_minishell *shell);
 int		prepare_heredocs(t_minishell *shell, t_command *cmds);
 void	set_heredoc_signals(void);
+int		ft_mkstemp(char *template);
 int		open_redirs(t_command *c);
 char	*find_cmd_in_path(t_minishell *shell, char *cmd);
 void	exec_cmd(t_minishell *shell, t_command *c);
