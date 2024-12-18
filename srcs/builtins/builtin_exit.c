@@ -6,46 +6,51 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 06:09:22 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 09:19:26 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_exit(t_minishell *shell, char **argv)
+static int	handle_exit_numeric_arg(char *arg, int last_status)
 {
 	long	val;
 	char	*endptr;
-	int		status;
 
-	if (argv[1])
-	{
-		errno = 0;
-		val = ft_strtol(argv[1], &endptr, 10);
-		// strtolの結果がエラーか、あるいはendptrが'\0'でなければ数値以外の文字が残っている
-		if (errno != 0 || *endptr != '\0')
-		{
-			// bashと同様のエラーメッセージを出力
-			// minishell: exit: a: numeric argument required
-			ft_fprintf(stderr, "exit\n");
-			ft_fprintf(stderr, "minishell: exit:\
-				%s: numeric argument required\n", argv[1]);
-			exit(2);
-		}
-		status = (int)val; // longをintにキャスト（範囲外の場合は動作未定義ですがここは簡易実装）
-	}
-	else
-	{
-		status = shell->last_status; // 引数がなければ0で終了
-	}
-	if (argv[2])
+	if (!arg)
+		return (last_status);
+	errno = 0;
+	val = ft_strtol(arg, &endptr, 10);
+	if (errno != 0 || *endptr != '\0')
 	{
 		ft_fprintf(stderr, "exit\n");
-		ft_fprintf(stderr, "minishell: exit: too many arguments\n");
-		exit(1);
+		ft_fprintf(stderr, "minishell: exit: \
+%s: numeric argument required\n", arg);
+		exit(2);
 	}
-	// 引数が正常に数値なら"exit"を表示する必要があればここで表示
-	ft_fprintf(stdout, "exit\n"); // 必要なら有効にする
+	return ((int)val);
+}
+
+static int	handle_exit_extra_args(char **argv, int is_pipe)
+{
+	if (argv[2])
+	{
+		if (!is_pipe)
+			ft_fprintf(stderr, "exit\n");
+		ft_fprintf(stderr, "minishell: exit: too many arguments\n");
+		return (-1);
+	}
+	return (0);
+}
+
+int	builtin_exit(t_minishell *shell, char **argv, int is_pipe)
+{
+	int	status;
+
+	status = handle_exit_numeric_arg(argv[1], shell->last_status);
+	if (handle_exit_extra_args(argv, is_pipe) < 0)
+		return (1);
+	if (!is_pipe)
+		ft_fprintf(stdout, "exit\n");
 	exit(status);
-	return (0); // ここには到達しない
 }

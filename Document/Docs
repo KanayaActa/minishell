@@ -1,6 +1,7 @@
 リファクタリング予定・TODOリスト
 
 - fprintf使用禁止→dprintfやwriteベースに切り替えること。
+- fprintfはlibftに組み込む。va_argとかがあるから
 - realloc使用禁止→reallocを用いないメモリアロケーション戦略を検討する。xrealloc削除。
 - mallocエラーハンドリング→xmalloc, xreallocでexit対応済み。今後はエラー発生時のメッセージ整備。
 - close漏れチェック：パイプ、リダイレクト時のfdを漏れなくcloseすることを確認。
@@ -27,6 +28,7 @@ USER a
 miwasa@c4r1s10:~/Desktop/dev_mini$ ./minishell 
 minishell> echo $"USER a"
 $USER a
+→この件はzshも対応しておらず、POSIX標準でない為不要[ysugo]
 exportの引数なしをソートする
 - heredoc: 変数展開されていない
 miwasa@c4r1s10:~/Desktop/dev_mini$ cat << EOS
@@ -46,13 +48,62 @@ minishell: redirection error
 minishell> cat infile | cat ||| cat > outfile
 cat: infile: No such file or directory
 miwasa@c4r1s10:~/Desktop/dev_mini$ cat infile | cat ||| cat > outfile
-bash: syntax error near unexpected token `|'
+bash: syntax error near unexpected token `|
 minishell> /bin/
 minishell: execve error: Permission denied
 minishell> 
 exit
 miwasa@c4r1s10:~/Desktop/dev_mini$ /bin/
 bash: /bin/: Is a director
+
+heredocのadd histroy
+heredocの変数展開
+
+$ cat > out | ls | ls
+Document  incs  libft  Makefile  minishell  objs  out  srcs
+
+iuvwbi
+miwasa@c2r8s10:~/Desktop/norm_mini$ echo $$
+201364
+miwasa@c2r8s10:~/Desktop/norm_mini$ echo $$USER
+201364USER
+miwasa@c2r8s10:~/Desktop/norm_mini$ ./minishell 
+minishell> echo a$USER
+amiwasa
+minishell> echo $USER$USER
+miwasamiwasa
+minishell> echo $$$$$$$$USER$USER
+$$$$$$$miwasamiwasa
+minishell> 
+exit
+miwasa@c2r8s10:~/Desktop/norm_mini$ env -i ./minishell 
+minishell> env
+minishell> exit
+miwasa@c2r8s10:~/Desktop/norm_mini$ ./minishell 
+minishell> exit 1 1
+exit
+minishell: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ ./minishell 
+minishell> exit 1 a
+exit
+minishell: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1 1
+exit
+bash: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1a 1
+exit
+bash: exit: 1a: numeric argument required
+miwasa@c2r8s10 ~/Desktop/norm_mini
+ % bash
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1 1a
+exit
+bash: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1 a1
+exit
+bash: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit a a
+exit
+bash: exit: a: numeric argument required
 
 -未対応の見込み
 一時exportするだけで良さそう

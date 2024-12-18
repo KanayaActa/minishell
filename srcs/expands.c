@@ -6,95 +6,67 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:47 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 03:00:48 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 08:11:21 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_var(t_minishell *shell, const char *var)
+char	*expand_var(t_minishell *shell, const char *var)
 {
 	char	*val;
 
 	if (!ft_strcmp(var, "?"))
-	{
 		return (ft_itoa(shell->last_status));
-	}
 	val = env_get_value(shell->envp, var);
 	if (!val)
 		return (ft_strdup(""));
 	return (ft_strdup(val));
 }
 
-char	*expand_variables(t_minishell *shell, const char *str)
+static int	is_quote_char(char c, int in_s, int in_d)
 {
-	char	*res;
-	int		in_s;
-	int		in_d;
-	size_t	i;
-	char	*e;
-	char	*tmp;
-	size_t	start;
-	char	*var;
-	char	*val;
+	return ((c == '\'' && !in_d) || (c == '"' && !in_s));
+}
 
-	// handle quotes and expansions
-	// 'no expansions in single quotes'
-	// expand $VAR and $?
-	// skip expansions in single quotes, do in double quotes
-	// minimal implementation
-	res = ft_strdup("");
-	in_s = 0;
-	in_d = 0;
-	i = 0;
-	while (str[i])
+static void	process_quote_char(const char *str, int is_heredoc, \
+t_expand_state *st)
+{
+	if (is_heredoc)
 	{
-		if (str[i] == '\'' && !in_d)
+		st->res = append_char(st->res, str, st->i);
+		st->i++;
+	}
+	else
+	{
+		toggle_quote_state(str[st->i], &st->in_s, &st->in_d);
+		st->i++;
+	}
+}
+
+char	*expand_variables(t_minishell *shell, const char *str, int is_heredoc)
+{
+	t_expand_state	st;
+
+	st.res = ft_strdup("");
+	st.in_s = 0;
+	st.in_d = 0;
+	st.i = 0;
+	while (str[st.i])
+	{
+		if (is_quote_char(str[st.i], st.in_s, st.in_d))
 		{
-			in_s = !in_s;
-			i++;
-			continue ;
+			process_quote_char(str, is_heredoc, &st);
 		}
-		if (str[i] == '"' && !in_s)
+		else if (str[st.i] == '$' && (!st.in_s || is_heredoc))
 		{
-			in_d = !in_d;
-			i++;
-			continue ;
-		}
-		if (str[i] == '$' && !in_s)
-		{
-			i++;
-			if (str[i] == '?')
-			{
-				i++;
-				e = expand_var(shell, "?");
-				tmp = ft_strjoin_free(res, e);
-				res = tmp;
-				continue ;
-			}
-			// parse var name
-			start = i;
-			if (!((ft_isalpha(str[i]) || str[i] == '_')))
-			{
-				// no valid var name, just append '$'
-				tmp = ft_strjoin_free(res, ft_strndup("$", 1));
-				res = tmp;
-				continue ;
-			}
-			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-				i++;
-			var = ft_strndup(str + start, i - start);
-			val = expand_var(shell, var);
-			xfree(var);
-			tmp = ft_strjoin_free(res, val);
-			res = tmp;
+			st.res = handle_dollar(shell, str, &st.i, st.res);
 		}
 		else
 		{
-			tmp = ft_strjoin_free(res, ft_strndup(&str[i], 1));
-			res = tmp;
-			i++;
+			st.res = append_char(st.res, str, st.i);
+			st.i++;
 		}
 	}
-	return (res);
+	return (st.res);
 }

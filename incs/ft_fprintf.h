@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   ft_fprintf.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 17:18:09 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 17:37:52 by ysugo            ###   ########.fr       */
+/*   Created: 2024/12/15 18:36:17 by miwasa            #+#    #+#             */
+/*   Updated: 2024/12/17 17:37:16 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef FT_FPRINTF_H
+# define FT_FPRINTF_H
 
-# include <stdio.h>
-# include <stdlib.h>
+# include "minishell.h"
 
-void	*xmalloc(size_t size);
-void	*xrealloc(void *ptr, size_t size);
-void	xfree(void *ptr);
-char	*ft_strjoin_free(char *s1, char *s2);
+int	ffprintf_handle_s(const char **p, va_list args);
+int	ffprintf_handle_d(const char **p, va_list args);
+int	ffprintf_handle_c(const char **p, va_list args);
+int	ffprintf_handle_percent(const char **p);
+int	ffprintf_handle_other(const char **p);
+int	ft_fprintf(FILE *stream, const char *fmt, ...);
 
 #endif

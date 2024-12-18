@@ -6,7 +6,7 @@
 #    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/15 18:45:56 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/18 10:56:15 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,19 +25,40 @@ RLFLAGS		:= -lreadline
 
 SRCS		:= \
 	minishell.c \
+	minishell_utils.c \
 	env.c \
+	env_utils.c \
 	utils.c \
+	ft_mkstemp_utils.c \
+	ft_fprintf.c \
+	ft_fprintf_utils.c \
 	lexer.c \
+	lexer_utils.c \
 	expands.c \
+	expands_utils.c \
 	parser.c \
+	parser_free.c \
+	parser_line.c \
+	parser_processtoken.c \
+	heredoc.c \
+	heredoc_utils.c \
 	signal.c \
 	executor.c \
+	executor_childsetup.c \
+	executor_mainutils.c \
+	executor_path.c \
+	executor_redir.c \
+	executor_utils.c \
 	builtins.c \
 	builtins/builtin_cd.c \
 	builtins/builtin_echo.c \
 	builtins/builtin_env.c \
 	builtins/builtin_exit.c \
 	builtins/builtin_export.c \
+	builtins/builtin_export_utils.c \
+	builtins/builtin_export_mainutils.c \
+	builtins/builtin_export_sort.c \
+	builtins/builtin_export_sort_utils.c \
 	builtins/builtin_pwd.c \
 	builtins/builtin_unset.c \
 

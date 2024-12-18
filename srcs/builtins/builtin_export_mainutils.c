@@ -1,49 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_export_mainutils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/17 02:58:29 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 12:52:29 by ysugo            ###   ########.fr       */
+/*   Created: 2024/12/17 21:26:41 by ysugo             #+#    #+#             */
+/*   Updated: 2024/12/17 21:56:56 by ysugo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_n_option(const char *arg)
+int	handle_no_eq_case(t_minishell *shell, char *arg)
 {
-	int	j;
+	char	*key;
 
-	if (arg[0] != '-')
-		return (0);
-	j = 1;
-	while (arg[j] == 'n')
-		j++;
-	return (j > 1 && arg[j] == '\0');
-}
-
-int	builtin_echo(char **argv)
-{
-	int	n_flag;
-	int	i;
-
-	n_flag = 0;
-	i = 1;
-	while (argv[i] && is_n_option(argv[i]))
+	key = ft_strdup(arg);
+	if (!is_valid_key(key))
 	{
-		n_flag = 1;
-		i++;
+		export_key_error(arg);
+		xfree(key);
+		return (1);
 	}
-	while (argv[i])
-	{
-		printf("%s", argv[i]);
-		if (argv[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (!n_flag)
-		printf("\n");
+	env_set_value(&shell->envp, key, "");
+	xfree(key);
 	return (0);
 }

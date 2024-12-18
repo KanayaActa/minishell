@@ -4,8 +4,10 @@
 		"fcntl.h": "c",
 		"stdlib.h": "c",
 		"libft.h": "c",
-		"struct.h": "c"
-	}
+		"struct.h": "c",
+		"lexer.h": "c",
+		"types.h": "c"
+	},
 	// "[c]": {
 	// 	"editor.defaultFormatter": "keyhr.42-c-format"
 	// },

@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 02:57:42 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 11:55:47 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,9 @@
 
 # define NOERR 0
 # define SYSTEM_ERR 1
+# define NO_HEREDOC 0
+# define IS_HEREDOC 1
 
-# include "struct.h"
-# include "parser.h"
-# include "builtins.h"
-# include "env.h"
-# include "executor.h"
-# include "expands.h"
-# include "lexer.h"
-# include "libft.h"
-# include "signals.h"
-# include "utils.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -37,11 +29,29 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <stddef.h>
+
+# include "struct.h"
+# include "lexer.h"
+# include "parser.h"
+# include "builtins.h"
+# include "env.h"
+# include "executor.h"
+# include "expands.h"
+# include "libft.h"
+# include "signals.h"
+# include "utils.h"
+# include "ft_fprintf.h"
+# include "ft_mkstemp.h"
 
 extern volatile sig_atomic_t	g_received_signal;
 
-void							init_shell(t_minishell *shell, char **envp);
-void							clean_env_table(t_minishell *shell);
-void							shell_loop(t_minishell *shell);
+void	init_shell(t_minishell *shell, char **envp);
+void	clean_env_table(t_minishell *shell);
+void	shell_loop(t_minishell *shell);
+char	*read_input_line(t_minishell *shell);
+int		execute_single_builtin(t_minishell *shell, t_command *cmd);
+int		handle_heredocs(t_minishell *shell, t_command *cmd);
+int		execute_command_list(t_minishell *shell, t_command *cmd);
 
 #endif
