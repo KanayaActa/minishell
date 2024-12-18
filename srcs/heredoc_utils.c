@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 05:26:49 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 10:34:09 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:56:52 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_heredoc_signals(void)
 		perror("sigaction");
 }
 
-static void	fill_padded_number(int num, char *buf)
+void	fill_padded_number(int num, char *buf)
 {
 	char	*num_str;
 	size_t	len;
@@ -51,34 +51,13 @@ static void	fill_padded_number(int num, char *buf)
 
 int	ft_mkstemp(char *template)
 {
-	char	*xpos;
-	int		fd;
-	int		tries = MAX_TRIES;
+	char		*xpos;
+	char		padded[PAD_WIDTH + 1];
 	static int	num = 0;
 
-	xpos = ft_strnstr(template, "XXXXXX", ft_strlen(template));
+	xpos = find_placeholder(template);
 	if (!xpos)
-	{
-		errno = EINVAL;
 		return (-1);
-	}
-	while (tries--)
-	{
-		char padded[PAD_WIDTH + 1];
-		if (num > MAX_NUM)
-		{
-			errno = EEXIST;
-			return (-1);
-		}
-		fill_padded_number(num, padded);
-		ft_memcpy(xpos, padded, PAD_WIDTH);
-		fd = open(template, O_CREAT | O_EXCL | O_RDWR, 0600);
-		if (fd >= 0)
-			return (fd);
-		if (errno != EEXIST)
-			return (-1);
-		num++;
-	}
-	errno = EEXIST;
-	return (-1);
+	ft_memset(padded, 0, sizeof(padded));
+	return (attempt_file_creation(template, xpos, padded, &num));
 }

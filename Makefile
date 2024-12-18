@@ -6,7 +6,7 @@
 #    By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 00:14:20 by miwasa            #+#    #+#              #
-#    Updated: 2024/12/18 05:26:21 by miwasa           ###   ########.fr        #
+#    Updated: 2024/12/18 10:56:15 by miwasa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS		:= \
 	env.c \
 	env_utils.c \
 	utils.c \
+	ft_mkstemp_utils.c \
 	ft_fprintf.c \
 	ft_fprintf_utils.c \
 	lexer.c \

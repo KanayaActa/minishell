@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 10:06:12 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:59:03 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # include "signals.h"
 # include "utils.h"
 # include "ft_fprintf.h"
+# include "ft_mkstemp.h"
 
 extern volatile sig_atomic_t	g_received_signal;
 
