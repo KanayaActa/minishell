@@ -6,13 +6,13 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 09:19:26 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 13:06:31 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_exit_numeric_arg(char *arg, int last_status)
+static int	handle_exit_numeric_arg(char *arg, int last_status, int is_pipe)
 {
 	long	val;
 	char	*endptr;
@@ -23,7 +23,8 @@ static int	handle_exit_numeric_arg(char *arg, int last_status)
 	val = ft_strtol(arg, &endptr, 10);
 	if (errno != 0 || *endptr != '\0')
 	{
-		ft_fprintf(stderr, "exit\n");
+		if (!is_pipe)
+			ft_fprintf(stderr, "exit\n");
 		ft_fprintf(stderr, "minishell: exit: \
 %s: numeric argument required\n", arg);
 		exit(2);
@@ -47,7 +48,7 @@ int	builtin_exit(t_minishell *shell, char **argv, int is_pipe)
 {
 	int	status;
 
-	status = handle_exit_numeric_arg(argv[1], shell->last_status);
+	status = handle_exit_numeric_arg(argv[1], shell->last_status, is_pipe);
 	if (handle_exit_extra_args(argv, is_pipe) < 0)
 		return (1);
 	if (!is_pipe)
