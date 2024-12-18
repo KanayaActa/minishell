@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:24 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/18 04:45:32 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 09:07:22 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exec_cmd(t_minishell *shell, t_command *c)
 	if (!c->argv || !c->argv[0])
 		exit(shell->last_status);
 	if (is_builtin(c->argv[0]))
-		exit(run_builtin(shell, c->argv));
+		exit(run_builtin(shell, c->argv, 1));
 	path = find_cmd_in_path(shell, c->argv[0]);
 	if (!path)
 	{

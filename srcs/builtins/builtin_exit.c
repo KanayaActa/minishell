@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:58:34 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 20:04:14 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 09:19:26 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,26 @@ static int	handle_exit_numeric_arg(char *arg, int last_status)
 	return ((int)val);
 }
 
-static void	handle_exit_extra_args(char **argv)
+static int	handle_exit_extra_args(char **argv, int is_pipe)
 {
 	if (argv[2])
 	{
-		ft_fprintf(stderr, "exit\n");
+		if (!is_pipe)
+			ft_fprintf(stderr, "exit\n");
 		ft_fprintf(stderr, "minishell: exit: too many arguments\n");
-		exit(1);
+		return (-1);
 	}
+	return (0);
 }
 
-int	builtin_exit(t_minishell *shell, char **argv)
+int	builtin_exit(t_minishell *shell, char **argv, int is_pipe)
 {
 	int	status;
 
 	status = handle_exit_numeric_arg(argv[1], shell->last_status);
-	handle_exit_extra_args(argv);
-	ft_fprintf(stdout, "exit\n");
+	if (handle_exit_extra_args(argv, is_pipe) < 0)
+		return (1);
+	if (!is_pipe)
+		ft_fprintf(stdout, "exit\n");
 	exit(status);
-	return (0);
 }

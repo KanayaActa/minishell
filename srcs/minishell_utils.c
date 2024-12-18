@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:29:20 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/18 07:14:51 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 09:08:09 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute_single_builtin(t_minishell *shell, t_command *cmd)
 		close(old_stdout);
 		return (-1);
 	}
-	shell->last_status = run_builtin(shell, cmd->argv);
+	shell->last_status = run_builtin(shell, cmd->argv, 0);
 	dup2(old_stdin, 0);
 	dup2(old_stdout, 1);
 	close(old_stdin);

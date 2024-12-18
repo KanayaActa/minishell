@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 07:15:03 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 07:37:36 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define NOERR 0
 # define SYSTEM_ERR 1
+# define NO_HEREDOC 0
+# define IS_HEREDOC 1
 
 # include <errno.h>
 # include <fcntl.h>

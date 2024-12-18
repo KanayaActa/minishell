@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_processtoken.c                               :+:      :+:    :+:   */
+/*   parser_processtoken.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:17:37 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/17 19:17:59 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 08:16:07 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_word_token(t_minishell *shell, t_command *cur, t_token **p)
 {
 	char	*expanded;
 
-	expanded = expand_variables(shell, (*p)->value);
+	expanded = expand_variables(shell, (*p)->value, NO_HEREDOC);
 	add_arg(cur, expanded);
 	*p = (*p)->next;
 	return (0);
@@ -42,7 +42,7 @@ static int	handle_redir_token(t_minishell *shell, t_command *cur, t_token **p)
 	*p = (*p)->next;
 	if (!*p || (*p)->type != T_WORD)
 		return (-1);
-	expanded = expand_variables(shell, (*p)->value);
+	expanded = expand_variables(shell, (*p)->value, NO_HEREDOC);
 	redir_add_back(&cur->redir, redir_new(rt, expanded));
 	*p = (*p)->next;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 01:40:03 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 02:15:34 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 09:06:26 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	run_builtin(t_minishell *shell, char **argv)
+int	run_builtin(t_minishell *shell, char **argv, int is_pipe)
 {
 	if (!ft_strcmp(argv[0], "echo"))
 		return (builtin_echo(argv));
@@ -48,6 +48,6 @@ int	run_builtin(t_minishell *shell, char **argv)
 	if (!ft_strcmp(argv[0], "env"))
 		return (builtin_env(shell));
 	if (!ft_strcmp(argv[0], "exit"))
-		return (builtin_exit(shell, argv));
+		return (builtin_exit(shell, argv, is_pipe));
 	return (127);
 }

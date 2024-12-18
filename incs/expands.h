@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expands.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:36:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 20:37:21 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 08:10:54 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 # include "minishell.h"
 
-char	*expand_variables(t_minishell *shell, const char *str);
+typedef struct s_expand_state {
+	int		in_s;
+	int		in_d;
+	size_t	i;
+	char	*res;
+}	t_expand_state;
+
+char	*expand_variables(t_minishell *shell, const char *str, int is_heredoc);
 char	*handle_dollar(t_minishell *shell, const char *str, size_t *i,
 			char *res);
 char	*append_char(char *res, const char *str, size_t i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expands.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysugo <ysugo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:00:47 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/17 17:05:46 by ysugo            ###   ########.fr       */
+/*   Updated: 2024/12/18 08:11:21 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,49 @@ char	*expand_var(t_minishell *shell, const char *var)
 	return (ft_strdup(val));
 }
 
-char	*expand_variables(t_minishell *shell, const char *str)
+static int	is_quote_char(char c, int in_s, int in_d)
 {
-	char	*res;
-	int		in_s;
-	int		in_d;
-	size_t	i;
+	return ((c == '\'' && !in_d) || (c == '"' && !in_s));
+}
 
-	res = ft_strdup("");
-	in_s = 0;
-	in_d = 0;
-	i = 0;
-	while (str[i])
+static void	process_quote_char(const char *str, int is_heredoc, \
+t_expand_state *st)
+{
+	if (is_heredoc)
 	{
-		if ((str[i] == '\'' && !in_d) || (str[i] == '"' && !in_s))
+		st->res = append_char(st->res, str, st->i);
+		st->i++;
+	}
+	else
+	{
+		toggle_quote_state(str[st->i], &st->in_s, &st->in_d);
+		st->i++;
+	}
+}
+
+char	*expand_variables(t_minishell *shell, const char *str, int is_heredoc)
+{
+	t_expand_state	st;
+
+	st.res = ft_strdup("");
+	st.in_s = 0;
+	st.in_d = 0;
+	st.i = 0;
+	while (str[st.i])
+	{
+		if (is_quote_char(str[st.i], st.in_s, st.in_d))
 		{
-			toggle_quote_state(str[i], &in_s, &in_d);
-			i++;
+			process_quote_char(str, is_heredoc, &st);
 		}
-		else if (str[i] == '$' && !in_s)
-			res = handle_dollar(shell, str, &i, res);
+		else if (str[st.i] == '$' && (!st.in_s || is_heredoc))
+		{
+			st.res = handle_dollar(shell, str, &st.i, st.res);
+		}
 		else
 		{
-			res = append_char(res, str, i);
-			i++;
+			st.res = append_char(st.res, str, st.i);
+			st.i++;
 		}
 	}
-	return (res);
+	return (st.res);
 }

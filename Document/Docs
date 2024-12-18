@@ -58,6 +58,51 @@ bash: /bin/: Is a director
 heredocのadd histroy
 heredocの変数展開
 
+$ cat > out | ls | ls
+Document  incs  libft  Makefile  minishell  objs  out  srcs
+
+iuvwbi
+miwasa@c2r8s10:~/Desktop/norm_mini$ echo $$
+201364
+miwasa@c2r8s10:~/Desktop/norm_mini$ echo $$USER
+201364USER
+miwasa@c2r8s10:~/Desktop/norm_mini$ ./minishell 
+minishell> echo a$USER
+amiwasa
+minishell> echo $USER$USER
+miwasamiwasa
+minishell> echo $$$$$$$$USER$USER
+$$$$$$$miwasamiwasa
+minishell> 
+exit
+miwasa@c2r8s10:~/Desktop/norm_mini$ env -i ./minishell 
+minishell> env
+minishell> exit
+miwasa@c2r8s10:~/Desktop/norm_mini$ ./minishell 
+minishell> exit 1 1
+exit
+minishell: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ ./minishell 
+minishell> exit 1 a
+exit
+minishell: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1 1
+exit
+bash: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1a 1
+exit
+bash: exit: 1a: numeric argument required
+miwasa@c2r8s10 ~/Desktop/norm_mini
+ % bash
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1 1a
+exit
+bash: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit 1 a1
+exit
+bash: exit: too many arguments
+miwasa@c2r8s10:~/Desktop/norm_mini$ exit a a
+exit
+bash: exit: a: numeric argument required
 
 -未対応の見込み
 一時exportするだけで良さそう
