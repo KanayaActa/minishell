@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:17 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 07:14:39 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 11:55:16 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,17 @@ void	clean_env_table(t_minishell *shell)
 void	shell_loop(t_minishell *shell)
 {
 	t_command	*cmd;
+	char		*line;
 
 	while (1)
 	{
-		cmd = get_parsed_command(shell);
-		if (!cmd)
+		line = read_input_line(shell);
+		if (!line)
 			break ;
+		cmd = parse_line(shell, line);
+		xfree(line);
+		if (!cmd)
+			continue ;
 		if (handle_heredocs(shell, cmd) < 0)
 			continue ;
 		if (execute_command_list(shell, cmd) < 0)

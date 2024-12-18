@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:29:20 by ysugo             #+#    #+#             */
-/*   Updated: 2024/12/18 09:08:09 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 11:55:26 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,6 @@ int	execute_single_builtin(t_minishell *shell, t_command *cmd)
 	close(old_stdin);
 	close(old_stdout);
 	return (0);
-}
-
-t_command	*get_parsed_command(t_minishell *shell)
-{
-	char		*line;
-	t_command	*cmd;
-
-	line = read_input_line(shell);
-	if (!line)
-		return (NULL);
-	cmd = parse_line(shell, line);
-	xfree(line);
-	return (cmd);
 }
 
 int	handle_heredocs(t_minishell *shell, t_command *cmd)

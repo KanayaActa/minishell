@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:43:28 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 10:59:03 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 11:55:47 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@
 
 extern volatile sig_atomic_t	g_received_signal;
 
-void		init_shell(t_minishell *shell, char **envp);
-void		clean_env_table(t_minishell *shell);
-void		shell_loop(t_minishell *shell);
-char		*read_input_line(t_minishell *shell);
-int			execute_single_builtin(t_minishell *shell, t_command *cmd);
-t_command	*get_parsed_command(t_minishell *shell);
-int			handle_heredocs(t_minishell *shell, t_command *cmd);
-int			execute_command_list(t_minishell *shell, t_command *cmd);
+void	init_shell(t_minishell *shell, char **envp);
+void	clean_env_table(t_minishell *shell);
+void	shell_loop(t_minishell *shell);
+char	*read_input_line(t_minishell *shell);
+int		execute_single_builtin(t_minishell *shell, t_command *cmd);
+int		handle_heredocs(t_minishell *shell, t_command *cmd);
+int		execute_command_list(t_minishell *shell, t_command *cmd);
 
 #endif

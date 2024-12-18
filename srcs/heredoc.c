@@ -6,7 +6,7 @@
 /*   By: miwasa <miwasa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 05:06:02 by miwasa            #+#    #+#             */
-/*   Updated: 2024/12/18 10:17:12 by miwasa           ###   ########.fr       */
+/*   Updated: 2024/12/18 11:15:36 by miwasa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	run_heredoc_child_process(t_minishell *shell, int fd,
 			xfree(expanded);
 		}
 	}
-	exit(0);
+	exit((close(fd), 0));
 }
 
 static int	execute_heredoc_in_child(t_minishell *shell, int fd,
